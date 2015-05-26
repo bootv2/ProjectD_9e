@@ -36,9 +36,9 @@ class Edge
     { target = argTarget; weight = argWeight; }
 }
 
-public class ProjectD
+public class Dijkstra
 {
-    public static void computePaths(Vertex source)
+    public void computePaths(Vertex source)
     {
         source.minDistance = 0.;
         PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
@@ -72,9 +72,9 @@ public class ProjectD
         return path;
     }
 
-    public static void main(String[] args)
+    public void testDijkstra()
     {
-        Vertex v0 = new Vertex("Redvile");
+        Vertex v0 = new Vertex("Redville");
 	Vertex v1 = new Vertex("Blueville");
 	Vertex v2 = new Vertex("Greenville");
 	Vertex v3 = new Vertex("Orangeville");
