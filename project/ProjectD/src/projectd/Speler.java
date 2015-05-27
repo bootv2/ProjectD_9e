@@ -9,10 +9,14 @@ import javax.swing.ImageIcon;
 
 public class Speler extends Item implements BestuurbaarElement {
 
-    ArrayList<Item> otherItems = new ArrayList<Item>();
+    private final int MOVEMENT_SPEED = 10;
+    private ArrayList<Item> otherItems = new ArrayList<Item>();
 
-    int sHeight;
-    int sWidth;
+    private int sHeight;
+
+    private int sWidth;
+
+    private boolean colliding = false;
 
     public Speler(String spritePath, int wx, int wy, Insets i) throws IOException {
         super(i);
@@ -27,9 +31,9 @@ public class Speler extends Item implements BestuurbaarElement {
         xCoordinate = wx / 2;
         yCoordinate = wy / 2;
         insets = i;
-        sprite.setBounds(xCoordinate + insets.left, yCoordinate + insets.top, 54, 38);
-        this.width = 54;
-        this.height = 38;
+        sprite.setBounds(xCoordinate + insets.left, yCoordinate + insets.top, width, height);
+        this.width = 32;
+        this.height = 28;
     }
 
     private boolean _hasBazooka;
@@ -54,20 +58,23 @@ public class Speler extends Item implements BestuurbaarElement {
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
-            moveRight();
+        if (!Game.isPaused()) {
+            if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+                moveRight();
+            }
+            if (ke.getKeyCode() == KeyEvent.VK_UP) {
+                moveUp();
+            }
+            if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
+                moveLeft();
+            }
+            if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
+                moveDown();
+            }
+            sprite.setLocation(xCoordinate, yCoordinate + 100);
+            sprite.setBounds(xCoordinate + insets.left, yCoordinate + 100 + insets.top, 32, 28);
         }
-        if (ke.getKeyCode() == KeyEvent.VK_UP) {
-            moveUp();
-        }
-        if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
-            moveLeft();
-        }
-        if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
-            moveDown();
-        }
-        sprite.setLocation(xCoordinate, yCoordinate);
-        sprite.setBounds(xCoordinate + insets.left, yCoordinate + insets.top, 54, 38);
+        else System.out.println("paused");
 
     }
 
@@ -77,52 +84,67 @@ public class Speler extends Item implements BestuurbaarElement {
     }
 
     private void moveRight() {
-        if (xCoordinate + width + 20 < sWidth) {
-            xCoordinate += 10;
-        }
-        for (int i = 0; i < otherItems.size(); i++) {
-            if (isColliding(otherItems.get(i))) {
-                xCoordinate -= 10;
-                break;
+        for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
+            if (xCoordinate + width + 10 < sWidth) {
+                xCoordinate += 1;
             }
+            for (int i = 0; i < otherItems.size(); i++) {
+                if (isColliding(otherItems.get(i))) {
+                    xCoordinate -= 1;
+                    colliding = true;
+                    break;
+                }
+            }
+
         }
+        colliding = false;
     }
 
-    
-
     private void moveUp() {
-        if (yCoordinate - 10 > 0) {
-            yCoordinate -= 10;
-        }
-         for (int i = 0; i < otherItems.size(); i++) {
-            if (isColliding(otherItems.get(i))) {
-                yCoordinate += 10;
-                break;
+        for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
+            if (yCoordinate - 1 > 0) {
+                yCoordinate -= 1;
+            }
+            for (int i = 0; i < otherItems.size(); i++) {
+                if (isColliding(otherItems.get(i))) {
+                    yCoordinate += 1;
+                    colliding = true;
+                    break;
+                }
             }
         }
+        colliding = false;
     }
 
     private void moveLeft() {
-        if (xCoordinate - 10 > 0) {
-            xCoordinate -= 10;
-        }
-         for (int i = 0; i < otherItems.size(); i++) {
-            if (isColliding(otherItems.get(i))) {
-                xCoordinate += 10;
-                break;
+        for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
+            if (xCoordinate - 1 > 0) {
+                xCoordinate -= 1;
             }
+            for (int i = 0; i < otherItems.size(); i++) {
+                if (isColliding(otherItems.get(i))) {
+                    xCoordinate += 1;
+                    colliding = true;
+                    break;
+                }
+            }
+            colliding = false;
         }
     }
 
     private void moveDown() {
-        if (yCoordinate + height + 43 < sHeight) {
-            yCoordinate += 10;
-        }
-         for (int i = 0; i < otherItems.size(); i++) {
-            if (isColliding(otherItems.get(i))) {
-                yCoordinate -= 10;
-                break;
+        for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
+            if (yCoordinate + height + 33 < sHeight) {
+                yCoordinate += 1;
+            }
+            for (int i = 0; i < otherItems.size(); i++) {
+                if (isColliding(otherItems.get(i))) {
+                    yCoordinate -= 1;
+                    colliding = true;
+                    break;
+                }
             }
         }
+        colliding = false;
     }
 }

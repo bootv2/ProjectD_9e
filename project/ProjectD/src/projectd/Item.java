@@ -53,8 +53,8 @@ public class Item {
 
     public void setxCoordinate(int _xCoordinate) {
         this.xCoordinate = _xCoordinate;
-        sprite.setLocation(xCoordinate, yCoordinate);
-        sprite.setBounds(xCoordinate + insets.left, yCoordinate + insets.top, width, height);
+        sprite.setLocation(xCoordinate, yCoordinate + 100);
+        sprite.setBounds(xCoordinate + insets.left, yCoordinate + 100 + insets.top, width, height);
     }
 
     public int getyCoordinate() {
@@ -63,8 +63,8 @@ public class Item {
 
     public void setyCoordinate(int _yCoordinate) {
         this.yCoordinate = _yCoordinate;
-        sprite.setLocation(xCoordinate, yCoordinate);
-        sprite.setBounds(xCoordinate + insets.left, yCoordinate + insets.top, width, height);
+        sprite.setLocation(xCoordinate, yCoordinate + 100);
+        sprite.setBounds(xCoordinate + insets.left, yCoordinate + 100 + insets.top, width, height);
     }
 
     public JLabel getSprite() {
