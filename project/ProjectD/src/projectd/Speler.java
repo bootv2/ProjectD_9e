@@ -12,6 +12,8 @@ public class Speler extends Item implements BestuurbaarElement {
     private final int MOVEMENT_SPEED = 10;
     private ArrayList<Item> otherItems = new ArrayList<Item>();
 
+    
+
     private int sHeight;
 
     private int sWidth;
@@ -23,21 +25,25 @@ public class Speler extends Item implements BestuurbaarElement {
         this._hasBazooka = false;
         this._bazookaAmmo = 0;
         setSprite(spritePath);
-        sprite.setLocation(wx / 2, wy / 2);
+        getSprite().setLocation(wx / 2, wy / 2);
 
         sHeight = wy;
         sWidth = wx;
 
-        xCoordinate = wx / 2;
-        yCoordinate = wy / 2;
-        insets = i;
-        sprite.setBounds(xCoordinate + insets.left, yCoordinate + insets.top, width, height);
+        setxCoordinate(wx/2);
+        setyCoordinate(wy / 2);
+        setInsets(i);
+        getSprite().setBounds(getxCoordinate() + getInsets().left, getyCoordinate() + getInsets().top, width, height);
         this.width = 32;
         this.height = 28;
     }
 
     private boolean _hasBazooka;
     private int _bazookaAmmo;
+    
+    public void setOtherItems(ArrayList<Item> otherItems) {
+        this.otherItems = otherItems;
+    }
 
     public void schietBazooka() {
         throw new UnsupportedOperationException();
@@ -71,8 +77,8 @@ public class Speler extends Item implements BestuurbaarElement {
             if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
                 moveDown();
             }
-            sprite.setLocation(xCoordinate, yCoordinate + 100);
-            sprite.setBounds(xCoordinate + insets.left, yCoordinate + 100 + insets.top, 32, 28);
+            getSprite().setLocation(getxCoordinate(), getyCoordinate());
+            getSprite().setBounds(getxCoordinate() + getInsets().left, getyCoordinate() + getInsets().top, 32, 28);
         }
         else System.out.println("paused");
 
@@ -85,12 +91,12 @@ public class Speler extends Item implements BestuurbaarElement {
 
     private void moveRight() {
         for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
-            if (xCoordinate + width + 10 < sWidth) {
-                xCoordinate += 1;
+            if (getxCoordinate() + width + 10 < sWidth) {
+                setxCoordinate(getxCoordinate() + 1);
             }
             for (int i = 0; i < otherItems.size(); i++) {
                 if (isColliding(otherItems.get(i))) {
-                    xCoordinate -= 1;
+                    setxCoordinate(getxCoordinate() - 1);
                     colliding = true;
                     break;
                 }
@@ -102,12 +108,12 @@ public class Speler extends Item implements BestuurbaarElement {
 
     private void moveUp() {
         for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
-            if (yCoordinate - 1 > 0) {
-                yCoordinate -= 1;
+            if (getyCoordinate() - 1 > 0) {
+                setyCoordinate(getyCoordinate() - 1);
             }
             for (int i = 0; i < otherItems.size(); i++) {
                 if (isColliding(otherItems.get(i))) {
-                    yCoordinate += 1;
+                    setyCoordinate(getyCoordinate() + 1);
                     colliding = true;
                     break;
                 }
@@ -118,12 +124,12 @@ public class Speler extends Item implements BestuurbaarElement {
 
     private void moveLeft() {
         for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
-            if (xCoordinate - 1 > 0) {
-                xCoordinate -= 1;
+            if (getxCoordinate() - 1 > 0) {
+                setxCoordinate(getxCoordinate() - 1);
             }
             for (int i = 0; i < otherItems.size(); i++) {
                 if (isColliding(otherItems.get(i))) {
-                    xCoordinate += 1;
+                    setxCoordinate(getxCoordinate() + 1);
                     colliding = true;
                     break;
                 }
@@ -134,12 +140,12 @@ public class Speler extends Item implements BestuurbaarElement {
 
     private void moveDown() {
         for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
-            if (yCoordinate + height + 33 < sHeight) {
-                yCoordinate += 1;
+            if (getyCoordinate() + height + 33 < sHeight) {
+                setyCoordinate(getyCoordinate() + 1);
             }
             for (int i = 0; i < otherItems.size(); i++) {
                 if (isColliding(otherItems.get(i))) {
-                    yCoordinate -= 1;
+                    setyCoordinate(getyCoordinate() - 1);
                     colliding = true;
                     break;
                 }

@@ -32,15 +32,15 @@ import javax.swing.KeyStroke;
 public class Game {
     
     private static boolean paused = false;
-    private static JButton pauseButton;
-    private static JFrame frame;
-    private static Speler speler;
-    private static Muur muur;
-    private static Insets insets;
-    private final static int X = 656;
-    private final static int Y = 570;
-    private static ArrayList<ArrayList<Veld>> veld = new ArrayList<ArrayList<Veld>>();
-    public static void main(String[] args)
+    private JButton pauseButton;
+    private JFrame frame;
+    private Speler speler;
+    private Muur muur;
+    private Insets insets;
+    private final int X = 656;
+    private final int Y = 570;
+    private veld[][] veld = new Veld[20][20]();
+    public void run()
     {
         
         frame = new JFrame("Doolhof groep 9");
@@ -49,6 +49,13 @@ public class Game {
         frame.setBackground(Color.white);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        
+        try {
+            speler = new Speler("C:\\Users\\TTT\\Downloads\\download.jpg", X, Y - 100, insets);
+            muur = new Muur(insets, "C:\\Users\\TTT\\Downloads\\download2.jpg");
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
         
         for(int i = 0; i < 20; i++)
         {
@@ -64,6 +71,7 @@ public class Game {
                     } catch (IOException ex) {
                         System.out.println(ex.toString());
                     }
+                    speler.addOtherItem(muur);
                     veld.get(i).get(x).setMyItem(muur);
                     veld.get(i).get(x).setxCoord(i * 32);
                     veld.get(i).get(x).setyCoord((x * 24)-50);
@@ -74,12 +82,8 @@ public class Game {
         
         
         
-        try {
-            speler = new Speler("C:\\Users\\TTT\\Downloads\\download.jpg", X, Y - 100, insets);
-            muur = new Muur(insets, "C:\\Users\\TTT\\Downloads\\download2.jpg");
-        } catch (IOException ex) {
-            System.out.println(ex.toString());
-        }
+        
+        //speler.setOtherItems
         
         muur.setxCoordinate(100);
         muur.setyCoordinate(100);
@@ -123,7 +127,7 @@ public class Game {
         frame.setVisible(true);
     }
     
-    private static void update()
+    private void update()
     {
         
     }

@@ -15,12 +15,12 @@ public class Item {
         this.insets = insets;
     }
 
-    protected int xCoordinate;
-    protected int yCoordinate;
+    private int xCoordinate;
+    private int yCoordinate;
     protected int width;
     protected int height;
-    protected JLabel sprite = null;
-    protected Insets insets;
+    private JLabel sprite = null;
+    private Insets insets;
     private BufferedImage myPicture = null;
 
     public int getWidth() {
