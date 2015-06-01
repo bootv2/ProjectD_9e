@@ -11,16 +11,12 @@ import javax.swing.JLabel;
 
 public class Item {
 
-    public Item(Insets insets) {
-        this.insets = insets;
-    }
 
     private int xCoordinate;
     private int yCoordinate;
     protected int width;
     protected int height;
     private JLabel sprite = null;
-    private Insets insets;
     private BufferedImage myPicture = null;
 
     public int getWidth() {
@@ -39,22 +35,14 @@ public class Item {
         this.height = height;
     }
 
-    public Insets getInsets() {
-        return insets;
-    }
-
-    public void setInsets(Insets insets) {
-        this.insets = insets;
-    }
-
     public int getxCoordinate() {
         return xCoordinate;
     }
 
-    public void setxCoordinate(int _xCoordinate) {
+    public void setxCoordinate(int _xCoordinate) {//verplaatsen naar view
         this.xCoordinate = _xCoordinate;
         sprite.setLocation(xCoordinate, yCoordinate + 100);
-        sprite.setBounds(xCoordinate + insets.left, yCoordinate + 100 + insets.top, width, height);
+        sprite.setBounds(xCoordinate, yCoordinate + 100, width, height);
     }
 
     public int getyCoordinate() {
@@ -64,7 +52,7 @@ public class Item {
     public void setyCoordinate(int _yCoordinate) {
         this.yCoordinate = _yCoordinate;
         sprite.setLocation(xCoordinate, yCoordinate + 100);
-        sprite.setBounds(xCoordinate + insets.left, yCoordinate + 100 + insets.top, width, height);
+        sprite.setBounds(xCoordinate, yCoordinate + 100, width, height);
     }
 
     public JLabel getSprite() {
@@ -76,7 +64,7 @@ public class Item {
         sprite = new JLabel(new ImageIcon(myPicture));
     }
 
-    public boolean isColliding(Item i) {
+    public boolean isColliding(Item i) {//Doordat we werken met velden en zonder soepele bewegingen
         //this collider
         int r1 = (int) (getxCoordinate() + width);
         int l1 = (int) (getxCoordinate());

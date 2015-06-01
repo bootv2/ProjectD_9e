@@ -7,6 +7,7 @@ package projectd;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,110 +30,138 @@ import javax.swing.KeyStroke;
  *
  * @author TTT
  */
-public class Game {
-    
+public class Game extends JPanel {
+
     private static boolean paused = false;
     private JButton pauseButton;
     private JFrame frame;
     private Speler speler;
     private Muur muur;
-    private Insets insets;
-    private final int X = 656;
-    private final int Y = 570;
-    private veld[][] veld = new Veld[20][20]();
-    public void run()
-    {
-        
+    private DrawField drawfield;
+    private final int SCREEN_WIDTH = 656;
+    private final int SCREEN_HEIGHT = 570;
+    private Veld[][] aveld = new Veld[20][20];
+    ArrayList<ArrayList<Veld>> veld = new ArrayList<ArrayList<Veld>>();
+
+    public void run() {
+        //Graphics g;
         frame = new JFrame("Doolhof groep 9");
-        insets = frame.getInsets();
-        frame.setLayout(null);
+        //frame.setLayout(null);
         frame.setBackground(Color.white);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        
-        try {
-            speler = new Speler("C:\\Users\\TTT\\Downloads\\download.jpg", X, Y - 100, insets);
-            muur = new Muur(insets, "C:\\Users\\TTT\\Downloads\\download2.jpg");
-        } catch (IOException ex) {
-            System.out.println(ex.toString());
-        }
-        
-        for(int i = 0; i < 20; i++)
-        {
+        for (int i = 0; i < 20; i++) {
             veld.add(new ArrayList<Veld>());
-            for(int x = 0; x < 20; x++)
-            {
+            for (int x = 0; x < 20; x++) {
                 veld.get(i).add(new Veld());
-                if(x == 0 || i == 0 || x == 19 || i == 19)
-                {
+                if (x == 0 || i == 0 || x == 19 || i == 19) {
                     
                     try {
-                        muur = new Muur(insets, "C:\\Users\\TTT\\Downloads\\download2.jpg");
+                        muur = new Muur("C:\\Users\\TTT\\Downloads\\download2.jpg");
                     } catch (IOException ex) {
                         System.out.println(ex.toString());
                     }
-                    speler.addOtherItem(muur);
+                    //speler.addOtherItem(muur);
                     veld.get(i).get(x).setMyItem(muur);
                     veld.get(i).get(x).setxCoord(i * 32);
-                    veld.get(i).get(x).setyCoord((x * 24)-50);
-                    
+                    veld.get(i).get(x).setyCoord((x * 24) + 25);
+
+                }
+                if (x % 2 == 0 && x % 4 != 0) {
+                        if (i != 1) {
+                            try {
+                                muur = new Muur("C:\\Users\\TTT\\Downloads\\download2.jpg");
+                            } catch (IOException ex) {
+                                System.out.println(ex.toString());
+                            }
+                            //speler.addOtherItem(muur);
+                            veld.get(i).get(x).setMyItem(muur);
+                            veld.get(i).get(x).setxCoord(i * 32);
+                            veld.get(i).get(x).setyCoord((x * 24) + 25);
+                        }
+                    }
+                    else if (x%4 == 0)
+                    {
+                        if (i != 18) {
+                            try {
+                                muur = new Muur("C:\\Users\\TTT\\Downloads\\download2.jpg");
+                            } catch (IOException ex) {
+                                System.out.println(ex.toString());
+                            }
+                            //speler.addOtherItem(muur);
+                            veld.get(i).get(x).setMyItem(muur);
+                            veld.get(i).get(x).setxCoord(i * 32);
+                            veld.get(i).get(x).setyCoord((x * 24) + 25);
+                        }
+                    }
+            }
+        }
+
+        try {
+            //speler.setOtherItems
+            
+            pauseButton = new JButton("Pause");
+            pauseButton.setLocation(0, 0);
+            pauseButton.setBounds(0, 0, 40, 10);
+            /*pauseButton.addActionListener(new ActionListener(){
+            
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+            if(isPaused())
+            {
+                System.out.println("game unpaused");
+                paused = false;
+            }
+            else paused = true;
+            System.out.println("button pressed");
+            }
+            });
+            
+            
+            
+            frame.getContentPane().add(pauseButton, BorderLayout.NORTH);*/
+            /*for(ArrayList<Veld> vlist : veld)
+            {
+            for(Veld v : vlist)
+            {
+            if(v.getMyItem() != null)
+            frame.getContentPane().add(v.getMyItem().getSprite());
+            }
+            }*/
+            speler = new Speler("C:\\Users\\TTT\\Downloads\\download.jpg", SCREEN_WIDTH, SCREEN_HEIGHT - 100, veld.get(5).get(5));
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        drawfield = new DrawField();
+
+        for (int i = 0; i < 20; i++) {
+            for (int x = 0; x < 20; x++) {
+                if (veld.get(i).get(x).getMyItem() != null) {
+                    drawfield.addItem(veld.get(i).get(x).getMyItem());
+                    speler.addOtherItem(veld.get(i).get(x).getMyItem());
                 }
             }
         }
-        
-        
-        
-        
-        //speler.setOtherItems
-        
-        muur.setxCoordinate(100);
-        muur.setyCoordinate(100);
-        
-        speler.addOtherItem(muur);
-        
-        /*pauseButton = new JButton("Pause");
-        pauseButton.setLocation(0, 0);
-        pauseButton.setBounds(0 + insets.left, 0+insets.top, 40, 10);
-        pauseButton.addActionListener(new ActionListener(){
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if(isPaused())
-                    paused = false;
-                else paused = true;
-                System.out.println("button pressed");
-            }
-        });
-        
-        
-        
-        frame.getContentPane().add(pauseButton);*/
-        
-        for(ArrayList<Veld> vlist : veld)
-        {
-            for(Veld v : vlist)
-            {
-                if(v.getMyItem() != null)
-                    frame.getContentPane().add(v.getMyItem().getSprite());
-            }
-        }
-        
+        frame.getContentPane().add(drawfield, BorderLayout.CENTER);
+        System.out.println(drawfield.getSize());
+
         frame.getContentPane().add(speler.getSprite());
-        frame.getContentPane().add(muur.getSprite());
+        //frame.getContentPane().add(muur.getSprite());
         frame.addKeyListener(speler);
 
-        frame.setSize(X + insets.left + insets.right,
-                Y + insets.top + insets.bottom);
-        
+        frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
         frame.setVisible(true);
+        while (true) {
+            frame.repaint();
+        }
     }
-    
-    private void update()
-    {
-        
+
+    private void update() {
+
     }
-    
-    
+
     public static boolean isPaused() {
         return paused;
     }
@@ -140,7 +169,5 @@ public class Game {
     public static void setPaused(boolean paused) {
         Game.paused = paused;
     }
-    
-    
-    
+
 }

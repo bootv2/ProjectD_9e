@@ -7,9 +7,6 @@ public class Vriend extends Pickup {
 	public Speler _unnamed_Speler_;
 	public Item _unnamed_Item_;
 
-    public Vriend(Insets insets) {
-        super(insets);
-    }
 
 	public void voltooiLevel() {
 		throw new UnsupportedOperationException();

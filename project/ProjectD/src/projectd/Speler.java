@@ -20,22 +20,26 @@ public class Speler extends Item implements BestuurbaarElement {
 
     private boolean colliding = false;
 
-    public Speler(String spritePath, int wx, int wy, Insets i) throws IOException {
-        super(i);
+    public Speler(String spritePath, int wx, int wy, Veld v) throws IOException {
         this._hasBazooka = false;
         this._bazookaAmmo = 0;
         setSprite(spritePath);
-        getSprite().setLocation(wx / 2, wy / 2);
+        getSprite().setLocation(33, 29);
 
+        //33
+                //29
+        
         sHeight = wy;
         sWidth = wx;
+        
+        this.width = 16;
+        this.height = 14;
 
-        setxCoordinate(wx/2);
-        setyCoordinate(wy / 2);
-        setInsets(i);
-        getSprite().setBounds(getxCoordinate() + getInsets().left, getyCoordinate() + getInsets().top, width, height);
-        this.width = 32;
-        this.height = 28;
+        setxCoordinate(65);
+        setyCoordinate(29);
+        System.out.println(v.getxCoord());
+        getSprite().setBounds(33, 29, width, height);
+        
     }
 
     private boolean _hasBazooka;
@@ -78,7 +82,7 @@ public class Speler extends Item implements BestuurbaarElement {
                 moveDown();
             }
             getSprite().setLocation(getxCoordinate(), getyCoordinate());
-            getSprite().setBounds(getxCoordinate() + getInsets().left, getyCoordinate() + getInsets().top, 32, 28);
+            
         }
         else System.out.println("paused");
 
@@ -89,6 +93,7 @@ public class Speler extends Item implements BestuurbaarElement {
         //unused
     }
 
+    //move must be one function.
     private void moveRight() {
         for (int x = 0; x < MOVEMENT_SPEED && !colliding; x++) {
             if (getxCoordinate() + width + 10 < sWidth) {

@@ -6,8 +6,7 @@ import java.io.IOException;
 public class Muur extends Item {
 	private boolean _isInvicible;
 
-    public Muur(Insets insets, String spritePath) throws IOException {
-        super(insets);
+    public Muur(String spritePath) throws IOException {
         setSprite(spritePath);
         width = 32;
         height = 24;

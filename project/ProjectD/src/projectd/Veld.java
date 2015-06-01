@@ -11,7 +11,6 @@ public class Veld {
     private int yCoord;
     private static final int width = 32;
     private static final int height = 28;
-    Insets insets;
     
     public int getxCoord() {
         return xCoord;
@@ -45,13 +44,5 @@ public class Veld {
 
     public void setMyItem(Item myItem) {
         this.myItem = myItem;
-    }
-
-    public Insets getInsets() {
-        return insets;
-    }
-
-    public void setInsets(Insets insets) {
-        this.insets = insets;
     }
 }

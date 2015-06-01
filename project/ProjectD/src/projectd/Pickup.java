@@ -13,9 +13,5 @@ import java.awt.Insets;
  */
 public class Pickup extends Item 
 {
-
-    public Pickup(Insets insets) {
-        super(insets);
-    }
     
 }
